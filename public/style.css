@@ -1,33 +1,63 @@
 /* public/css/style.css */
-
-/* Estilos para la barra de navegación */
-.navbar {
-    background-color: #333;
-    color: #fff;
-    display: flex;
-    justify-content: space-between;
-    padding: 10px;
-  }
-  
-  .logo {
-    font-size: 20px;
-  }
-  
-  .nav-links a {
-    color: #fff;
-    text-decoration: none;
-    margin-left: 10px;
-  }
-  
-  /* Estilos para el contenido principal */
-  body {
+body {
     font-family: Arial, sans-serif;
-    background-color: #f2f2f2;
+    background-color: #f4f4f4;
   }
   
   h2 {
-    margin-top: 40px;
-    text-align: center;
-    font-size: 24px;
+    color: #333;
+  }
+  
+  .navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #007bff;
+    color: #fff;
+    padding: 10px;
+  }
+  
+  .navbar-title {
+    font-size: 20px;
+  }
+  
+  .navbar-links {
+    list-style: none;
+    display: flex;
+    gap: 10px;
+  }
+  
+  .navbar-link {
+    text-decoration: none;
+    color: #fff;
+  }
+  
+  form {
+    margin: 20px;
+    padding: 20px;
+    background-color: #fff;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+  }
+  
+  label {
+    display: block;
+    margin-bottom: 10px;
+  }
+  
+  input[type="text"] {
+    width: 100%;
+    padding: 5px;
+    border-radius: 3px;
+    border: 1px solid #ccc;
+  }
+  
+  button {
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 3px;
+    cursor: pointer;
   }
   

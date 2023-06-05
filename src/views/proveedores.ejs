@@ -1,0 +1,30 @@
+<!-- views/agregarProveedor.ejs -->
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Agregar Proveedor</title>
+  <link rel="stylesheet" type="text/css" href="/css/style.css">
+</head>
+<body>
+  <h2>Agregar Proveedor</h2>
+  <form action="/proveedores" method="POST">
+    <div>
+      <label for="nombre">Nombre:</label>
+      <input type="text" id="nombre" name="nombre" required>
+    </div>
+    <div>
+      <label for="numero">Número:</label>
+      <input type="text" id="numero" name="numero" required>
+    </div>
+    <div>
+      <label for="direccion">Dirección:</label>
+      <input type="text" id="direccion" name="direccion" required>
+    </div>
+    <div>
+      <label for="marca">Marca:</label>
+      <input type="text" id="marca" name="marca" required>
+    </div>
+    <button type="submit">Agregar</button>
+  </form>
+</body>
+</html>

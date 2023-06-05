@@ -1,3 +1,4 @@
+// src/app.js
 const express = require('express');
 const app = express();
 const path = require('path');
@@ -9,8 +10,15 @@ app.set('view engine', 'ejs');
 // Configurar carpeta estática
 app.use(express.static(path.join(__dirname, 'public')));
 
-// Definir rutas
-app.use('/', require('./routes/index'));
+// Ruta para la URL raíz
+app.get('/', (req, res) => {
+  res.render('home');
+});
+
+// src/app.js
+app.use(express.static(path.join(__dirname, 'public')));
+
+// ... otras rutas ...
 
 // Iniciar el servidor
 const port = 3000;

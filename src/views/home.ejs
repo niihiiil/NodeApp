@@ -1,23 +1,49 @@
+<!-- views/home.ejs -->
 <!DOCTYPE html>
 <html>
 <head>
   <title>Libreria la torre</title>
   <link rel="stylesheet" type="text/css" href="/css/style.css">
+  <style>
+    /* Estilos adicionales para el navbar */
+    .navbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background-color: #007bff;
+      color: #fff;
+      padding: 10px;
+    }
+
+    .navbar-title {
+      font-size: 20px;
+    }
+
+    .navbar-links {
+      list-style: none;
+      display: flex;
+      gap: 10px;
+    }
+
+    .navbar-link {
+      text-decoration: none;
+      color: #fff;
+    }
+  </style>
 </head>
 <body>
-  <nav>
-    <div class="navbar">
-      <div class="logo">
-        <h1>Libreria la torre</h1>
-      </div>
-      <div class="nav-links">
-        <a href="/proveedores">Proveedores</a>
-        <a href="/stock">Stock</a>
-        <a href="/ventas">Ventas</a>
-        <a href="/compras">Compras</a>
-      </div>
-    </div>
-  </nav>
-  <h2>Libreria la torre</h2>
+  <div class="navbar">
+    <ul class="navbar-links">
+      <li><a class="navbar-link" href="/proveedores">Proveedores</a></li>
+      <li><a class="navbar-link" href="/stock">Stock</a></li>
+      <li><a class="navbar-link" href="/ventas">Ventas</a></li>
+      <li><a class="navbar-link" href="/compras">Compras</a></li>
+    </ul>
+    <h1 class="navbar-title">Libreria la torre</h1>
+  </div>
+  
+  <h2>Bienvenido a la Libreria la torre</h2>
+  
+  <!-- Resto del contenido -->
 </body>
 </html>
