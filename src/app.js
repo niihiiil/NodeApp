@@ -1,27 +1,57 @@
-// src/app.js
 const express = require('express');
+const sql = require('mssql');
+const dbConfig = require('./database/dbConfig'); // Importar la configuración de la base de datos
+
 const app = express();
-const path = require('path');
+const port = 3000;
 
-// Configurar vistas con EJS
-app.set('views', path.join(__dirname, 'views'));
-app.set('view engine', 'ejs');
 
-// Configurar carpeta estática
-app.use(express.static(path.join(__dirname, 'public')));
 
-// Ruta para la URL raíz
+// Establecer la conexión con SQL Server
+const connectionConfig = {
+  ...dbConfig,
+  options: {
+    encrypt: false // Ignorar errores de certificado
+  }
+};
+
+sql.connect(connectionConfig)
+  .then(() => console.log('Conexión exitosa con SQL Server'))
+  .catch((err) => console.error('Error al conectar con SQL Server', err));
+
+// Configurar la ruta para la vista Home
 app.get('/', (req, res) => {
   res.render('home');
 });
 
-// src/app.js
-app.use(express.static(path.join(__dirname, 'public')));
+// Configurar la ruta para la vista de proveedores
+app.get('/proveedores', (req, res) => {
+  // Obtener los proveedores de la base de datos
+  // ...
 
-// ... otras rutas ...
+  res.render('proveedores', { proveedores: proveedores });
+});
+
+// Configurar la ruta para agregar proveedores
+app.post('/proveedores/agregar', (req, res) => {
+  // Obtener los datos del formulario
+  const { nombre, telefono, direccion, estado } = req.body;
+
+  // Insertar los datos en la base de datos
+  // ...
+
+  res.redirect('/proveedores');
+});
+
+
+// Configurar rutas estáticas
+app.use(express.static(__dirname + '/public'));
+
+// Configurar el motor de vistas EJS
+app.set('view engine', 'ejs');
+app.set('views', __dirname + '/views');
 
 // Iniciar el servidor
-const port = 3000;
 app.listen(port, () => {
-  console.log(`Servidor iniciado en http://localhost:${port}`);
+  console.log(`La Torre Lib's está corriendo en http://localhost:${port}`);
 });
