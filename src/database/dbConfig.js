@@ -3,10 +3,10 @@ const config = {
     password: '1234',
     server: 'localhost',
     database: 'BDproyectolibreria',
-    "port": 1433, // make sure to change port
+    "port": 1432, // port from ssms
     "dialect": "mssql",
     "dialectOptions": {
-        "instanceName": "SQLEXPRESS",
+        "instanceName": "CRYPTOHEGELIAN\SQLSERVER",
     }
   };
   
