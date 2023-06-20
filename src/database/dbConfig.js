@@ -6,7 +6,7 @@ const config = {
     "port": 1432, // port from ssms
     "dialect": "mssql",
     "dialectOptions": {
-        "instanceName": "CRYPTOHEGELIAN\SQLSERVER",
+        "instanceName": "CRYPTOHEGELIAN\\SQLSERVER",
     }
   };
   

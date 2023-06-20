@@ -2,6 +2,7 @@ const express = require('express');
 const sql = require('mssql');
 const dbConfig = require('./database/dbConfig'); // Importar la configuración de la base de datos
 const path = require('path');
+const proveedoresController = require('./controllers/proveedoresController');
 
 const app = express();
 const port = 3000;
@@ -10,7 +11,8 @@ const port = 3000;
 const connectionConfig = {
   ...dbConfig,
   options: {
-    encrypt: false // Ignorar errores de certificado
+    encrypt: true,
+    trustServerCertificate: true
   }
 };
 
@@ -21,14 +23,10 @@ sql.connect(connectionConfig)
 // Configurar rutas estáticas
 app.use(express.static(path.join(__dirname, 'public')));
 
-
-// Configurar las rutas
-const proveedoresController = require('./controllers/proveedoresController');
-app.get('/proveedores', proveedoresController.obtenerListaProveedores);
-//app.post('/proveedores/agregar', proveedoresController.agregarProveedor);
+// Ruta para obtener los proveedores
+app.get('/proveedores', proveedoresController.getProveedores);
 
 // Iniciar el servidor
 app.listen(port, () => {
   console.log(`La Torre Lib's está corriendo en http://localhost:${port}`);
 });
-

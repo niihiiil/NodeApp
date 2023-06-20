@@ -5,7 +5,7 @@
   <meta charset="utf-8">
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
 
-  <title>Layout vistas</title>
+  <title>CRUD - Node.js</title>
   <meta content="" name="description">
   <meta content="" name="keywords">
 
@@ -273,100 +273,99 @@
 
   <main id="main" class="main">
     <div class="pagetitle">
-      <h1>Blank Page</h1>
+      <h1>Proveedores</h1>
       <nav>
         <ol class="breadcrumb">
           <li class="breadcrumb-item"><a href="index.html">Home</a></li>
-          <li class="breadcrumb-item">Pages</li>
+          <li class="breadcrumb-item">CRUD</li>
           <li class="breadcrumb-item active">Proveedores</li>
         </ol>
       </nav>
     </div><!-- End Page Title -->
   
-    <section class="section">
-      <div class="row">
-        <div class="col-lg-12">
-          <div class="card">
-            <div class="card-body">
-              <h5 class="card-title">Lista de Proveedores</h5>
-              <table id="proveedores-table">
-                <thead>
-                  <tr>
-                    <th>ID Proveedor</th>
-                    <th>Nombre</th>
-                    <th>Dirección</th>
-                    <th>Teléfono</th>
-                    <th>Estado</th>
-                    <th>Acciones</th>
-                  </tr>
-                </thead>
-                <tbody id="proveedores-table-body">
-                  <!-- Aquí se generarán dinámicamente las filas de la tabla -->
-                </tbody>
-              </table>
-            </div>
-          </div>
-        </div>
-      </div>
-    
-      <div class="row">
-        <div class="col-lg-6">
-          <div class="card">
-            <div class="card-body">
-              <h5 class="card-title">Agregar Proveedor</h5>
-              <form id="proveedor-form">
-                <div class="mb-3">
-                  <label for="nombre">Nombre:</label>
-                  <input type="text" class="form-control" id="nombre" name="nombre" required>
-                </div>
-                <div class="mb-3">
-                  <label for="direccion">Dirección:</label>
-                  <input type="text" class="form-control" id="direccion" name="direccion">
-                </div>
-                <div class="mb-3">
-                  <label for="telefono">Teléfono:</label>
-                  <input type="text" class="form-control" id="telefono" name="telefono">
-                </div>
-                <div class="mb-3">
-                  <label for="estado">Estado:</label>
-                  <input type="text" class="form-control" id="estado" name="estado" required>
-                </div>
-                <button type="submit" class="btn btn-primary">Guardar</button>
-              </form>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
+<!-- Table with stripped rows -->
+<table class="table datatable">
+  <thead>
+    <tr>
+      <th scope="col">ID Proveedor</th>
+      <th scope="col">Nombre</th>
+      <th scope="col">Dirección</th>
+      <th scope="col">Teléfono</th>
+      <th scope="col">Estado</th>
+      <th scope="col">Acciones</th>
+    </tr>
+  </thead>
+  <tbody id="proveedores-table-body">
+    <!-- Aquí se generarán dinámicamente las filas de la tabla -->
+  </tbody>
+</table>
+<!-- End Table with stripped rows -->
 
-    <script>
-      // Obtener la referencia a la tabla de proveedores
-      const proveedoresTableBody = document.getElementById('proveedores-table-body');
-    
-      // Obtener la lista de proveedores y mostrarlos en la tabla
-      fetch('/proveedores')
-        .then(response => response.json())
-        .then(data => {
-          data.proveedores.forEach(proveedor => {
-            const row = document.createElement('tr');
-            row.innerHTML = `
-              <td>${proveedor.Id_Proveedor}</td>
-              <td>${proveedor.Nombre}</td>
-              <td>${proveedor.Dirección}</td>
-              <td>${proveedor.Telefono}</td>
-              <td>${proveedor.Estado}</td>
-              <td>
-                <button class="btn btn-sm btn-primary">Editar</button>
-                <button class="btn btn-sm btn-danger">Eliminar</button>
-              </td>
-            `;
-            proveedoresTableBody.appendChild(row);
-          });
-        });
-    
-    </script>
-    
-    
+<div class="row">
+  <div class="col-lg-6">
+    <div class="card">
+      <div class="card-body">
+        <h5 class="card-title">Agregar Proveedor</h5>
+        <form id="proveedor-form">
+          <div class="mb-3">
+            <label for="nombre">Nombre:</label>
+            <input type="text" class="form-control" id="nombre" name="nombre" required>
+          </div>
+          <div class="mb-3">
+            <label for="direccion">Dirección:</label>
+            <input type="text" class="form-control" id="direccion" name="direccion">
+          </div>
+          <div class="mb-3">
+            <label for="telefono">Teléfono:</label>
+            <input type="text" class="form-control" id="telefono" name="telefono">
+          </div>
+          <div class="mb-3">
+            <label for="estado">Estado:</label>
+            <input type="text" class="form-control" id="estado" name="estado" required>
+          </div>
+          <button type="submit" class="btn btn-primary">Guardar</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+</section>
+
+<script>
+// Obtener la referencia del tbody de la tabla
+const proveedoresTableBody = document.getElementById('proveedores-table-body');
+
+// Realizar la solicitud GET a la ruta "/proveedores"
+fetch('/proveedores')
+  .then(response => response.json())
+  .then(proveedores => {
+    // Limpiar el contenido existente del tbody
+    proveedoresTableBody.innerHTML = '';
+
+    // Iterar sobre los proveedores y crear las filas de la tabla
+    proveedores.forEach(proveedor => {
+      const row = document.createElement('tr');
+      row.innerHTML = `
+        <td>${proveedor.Id_Proveedor}</td>
+        <td>${proveedor.Nombre}</td>
+        <td>${proveedor.Dirección}</td>
+        <td>${proveedor.Telefono}</td>
+        <td>${proveedor.Estado}</td>
+        <td>
+          <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#editarModal">Editar</button>
+          <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#eliminarModal">Eliminar</button>
+        </td>
+      `;
+      proveedoresTableBody.appendChild(row);
+    });
+  })
+  .catch(error => {
+    console.error('Error al obtener los proveedores', error);
+    // Manejar el error en caso de fallo en la solicitud
+  });
+</script>
+
     
   <!-- ======= Footer ======= -->
   <footer id="footer" class="footer">

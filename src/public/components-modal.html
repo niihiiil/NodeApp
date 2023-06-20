@@ -523,32 +523,81 @@
       <div class="row">
         <div class="col-lg-6">
 
-          <div class="card">
-            <div class="card-body">
-              <h5 class="card-title">Basic Modal</h5>
-              <p>Toggle a working modal demo by clicking the button below. It will slide down and fade in from the top of the page</p>
+         <!-- Table with stripped rows -->
+<table class="table datatable">
+  <thead>
+    <tr>
+      <th scope="col">ID Proveedor</th>
+      <th scope="col">Nombre</th>
+      <th scope="col">Dirección</th>
+      <th scope="col">Teléfono</th>
+      <th scope="col">Estado</th>
+      <th scope="col">Acciones</th>
+    </tr>
+  </thead>
+  <tbody id="proveedores-table-body">
+    <!-- Aquí se generarán dinámicamente las filas de la tabla -->
+  </tbody>
+</table>
+<!-- End Table with stripped rows -->
 
-              <!-- Basic Modal -->
-              <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#basicModal">
-                Basic Modal
-              </button>
-              <div class="modal fade" id="basicModal" tabindex="-1">
-                <div class="modal-dialog">
-                  <div class="modal-content">
-                    <div class="modal-header">
-                      <h5 class="modal-title">Basic Modal</h5>
-                      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body">
-                      Non omnis incidunt qui sed occaecati magni asperiores est mollitia. Soluta at et reprehenderit. Placeat autem numquam et fuga numquam. Tempora in facere consequatur sit dolor ipsum. Consequatur nemo amet incidunt est facilis. Dolorem neque recusandae quo sit molestias sint dignissimos.
-                    </div>
-                    <div class="modal-footer">
-                      <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                      <button type="button" class="btn btn-primary">Save changes</button>
-                    </div>
-                  </div>
-                </div>
-              </div><!-- End Basic Modal-->
+<!-- Editar Modal -->
+<div class="modal fade" id="editarModal" tabindex="-1">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Editar Proveedor</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <!-- Aquí puedes agregar el formulario para editar los datos del proveedor -->
+        <form id="editar-proveedor-form">
+          <div class="mb-3">
+            <label for="editar-nombre">Nombre:</label>
+            <input type="text" class="form-control" id="editar-nombre" name="editar-nombre" required>
+          </div>
+          <div class="mb-3">
+            <label for="editar-direccion">Dirección:</label>
+            <input type="text" class="form-control" id="editar-direccion" name="editar-direccion">
+          </div>
+          <div class="mb-3">
+            <label for="editar-telefono">Teléfono:</label>
+            <input type="text" class="form-control" id="editar-telefono" name="editar-telefono">
+          </div>
+          <div class="mb-3">
+            <label for="editar-estado">Estado:</label>
+            <input type="text" class="form-control" id="editar-estado" name="editar-estado" required>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+        <button type="button" class="btn btn-primary" id="editar-proveedor-btn">Guardar cambios</button>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- End Editar Modal -->
+
+<!-- Eliminar Modal -->
+<div class="modal fade" id="eliminarModal" tabindex="-1">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Confirmar Eliminación</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        ¿Estás seguro de que deseas eliminar este proveedor?
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+        <button type="button" class="btn btn-danger" id="eliminar-proveedor-btn">Eliminar</button>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- End Eliminar Modal -->
 
             </div>
           </div>

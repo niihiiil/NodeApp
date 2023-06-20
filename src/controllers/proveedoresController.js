@@ -1,23 +1,21 @@
-const path = require('path');
 const sql = require('mssql');
+const dbConfig = require('../database/dbConfig');
 
-exports.obtenerListaProveedores = (req, res) => {
-  sql.connect(config, (err) => {
-    if (err) {
-      console.error(err);
-      res.status(500).json({ error: 'Error de conexión con la base de datos' });
-    } else {
-      const query = 'SELECT * FROM Proveedor';
+// Obtener los proveedores desde la base de datos
+const getProveedores = async (req, res) => {
+  try {
+    // Conectar a la base de datos
+    await sql.connect(dbConfig);
 
-      new sql.Request().query(query, (err, result) => {
-        if (err) {
-          console.error(err);
-          res.status(500).json({ error: 'Error al obtener la lista de proveedores' });
-        } else {
-          const filePath = path.join(__dirname, '../public/proveedores.html');
-          res.sendFile(filePath);
-        }
-      });
-    }
-  });
+    // Realizar la consulta para obtener los proveedores
+    const result = await sql.query('SELECT * FROM proveedor');
+
+    // Enviar los proveedores como respuesta
+    res.json(result.recordset);
+  } catch (error) {
+    console.error('Error al obtener los proveedores', error);
+    res.status(500).json({ error: 'Error al obtener los proveedores' });
+  } 
 };
+
+module.exports = { getProveedores };
