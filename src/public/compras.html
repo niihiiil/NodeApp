@@ -5,11 +5,9 @@
   <meta charset="utf-8">
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
 
-  <title>CRUD - Node.js</title>
+  <title>NODE.js CRUD</title>
   <meta content="" name="description">
   <meta content="" name="keywords">
-
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" integrity="sha512-DadTlXpuprmhW/OnG/f6M3jVn8qNlYwWUryTC1JlU6PZzj8nyC1X5NU2rxmTJZn74XzzwawC6B4uPsM8XSw0Zg==" crossorigin="anonymous" />
 
   <!-- Favicons -->
   <link href="assets/img/favicon.png" rel="icon">
@@ -48,7 +46,7 @@
     <div class="d-flex align-items-center justify-content-between">
       <a href="index.html" class="logo d-flex align-items-center">
         <img src="assets/img/logo.png" alt="">
-        <span class="d-none d-lg-block">LayoutVistas</span>
+        <span class="d-none d-lg-block">CRUD - Node.js</span>
       </a>
       <i class="bi bi-list toggle-sidebar-btn"></i>
     </div><!-- End Logo -->
@@ -132,8 +130,8 @@
 
   </header><!-- End Header -->
 
-   <!-- ======= Sidebar ======= -->
-   <aside id="sidebar" class="sidebar">
+  <!-- ======= Sidebar ======= -->
+  <aside id="sidebar" class="sidebar">
 
     <ul class="sidebar-nav" id="sidebar-nav">
 
@@ -217,165 +215,164 @@
       </li><!-- End Proveedores Nav -->
       
 
-
   </aside><!-- End Sidebar-->
-
 
   <main id="main" class="main">
     <div class="pagetitle">
-      <h1>Proveedores</h1>
-      <nav>
-        <ol class="breadcrumb">
-          <li class="breadcrumb-item"><a href="index.html">Home</a></li>
-          <li class="breadcrumb-item">CRUD</li>
-          <li class="breadcrumb-item active">Proveedores</li>
-        </ol>
-      </nav>
-    </div><!-- End Page Title -->
-  
+        <h1>Proveedores</h1>
+        <nav>
+          <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="index.html">Home</a></li>
+            <li class="breadcrumb-item">CRUD</li>
+            <li class="breadcrumb-item active">Proveedores</li>
+          </ol>
+        </nav>
+      </div><!-- End Page Title -->
+
 <!-- Table with stripped rows -->
 <table class="table datatable">
-  <thead>
+      <thead>
     <tr>
+      <th scope="col">ID Compra</th>
       <th scope="col">ID Proveedor</th>
-      <th scope="col">Nombre</th>
-      <th scope="col">Dirección</th>
-      <th scope="col">Teléfono</th>
+      <th scope="col">Fecha de Compra</th>
+      <th scope="col">Total</th>
+      <th scope="col">Sub Total</th>
+      <th scope="col">IVA</th>
+      <th scope="col">Descuento</th>
       <th scope="col">Estado</th>
-      <th scope="col">Acciones</th>
     </tr>
   </thead>
-  <tbody id="proveedores-table-body">
+  <tbody id="compras-table-body">
     <!-- Aquí se generarán dinámicamente las filas de la tabla -->
   </tbody>
 </table>
 <!-- End Table with stripped rows -->
-
 <div class="row">
-  <div class="col-lg-6">
-    <div class="card">
-      <div class="card-body">
-        <h5 class="card-title">Agregar Proveedor</h5>
-        <form id="proveedor-form">
-          <div class="mb-3">
-            <label for="nombre">Nombre:</label>
-            <input type="text" class="form-control" id="nombre" name="nombre" required>
-          </div>
-          <div class="mb-3">
-            <label for="direccion">Dirección:</label>
-            <input type="text" class="form-control" id="direccion" name="direccion">
-          </div>
-          <div class="mb-3">
-            <label for="telefono">Teléfono:</label>
-            <input type="text" class="form-control" id="telefono" name="telefono">
-          </div>
-          <div class="mb-3">
-            <label for="estado">Estado:</label>
-            <input type="text" class="form-control" id="estado" name="estado" required>
-          </div>
-          <button type="submit" class="btn btn-primary">Guardar</button>
-        </form>
+    <div class="col-lg-6">
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title">Agregar Compra</h5>
+          <form id="compra-form">
+            <div class="mb-3">
+              <label for="proveedor">Proveedor:</label>
+              <select class="form-control" id="proveedor" name="proveedor" required>
+                <!-- Las opciones se generarán dinámicamente desde la base de datos -->
+              </select>
+            </div>
+            <div class="mb-3">
+              <label for="fecha">Fecha:</label>
+              <input type="date" class="form-control" id="fecha" name="fecha" required>
+            </div>
+            <div class="mb-3">
+              <label for="total">Total:</label>
+              <input type="number" step="0.01" class="form-control" id="total" name="total" required>
+            </div>
+            <div class="mb-3">
+              <label for="subtotal">Sub Total:</label>
+              <input type="number" step="0.01" class="form-control" id="subtotal" name="subtotal" required>
+            </div>
+            <div class="mb-3">
+              <label for="iva">IVA:</label>
+              <input type="number" step="0.01" class="form-control" id="iva" name="iva">
+            </div>
+            <div class="mb-3">
+              <label for="descuento">Descuento:</label>
+              <input type="number" step="0.01" class="form-control" id="descuento" name="descuento">
+            </div>
+            <div class="mb-3">
+              <label for="estado">Estado:</label>
+              <select class="form-control" id="estado" name="estado" required>
+                <option value="1">Activo</option>
+                <option value="0">Inactivo</option>
+              </select>
+            </div>
+            <button type="submit" class="btn btn-primary">Guardar</button>
+          </form>
+        </div>
       </div>
     </div>
   </div>
-</div>
 
-</section>
-
-<!-- Modal para editar proveedor -->
-<div class="modal fade" id="editarModal" tabindex="-1" aria-labelledby="editarModalLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="editarModalLabel">Editar Proveedor</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <div class="modal-body">
-        <!-- Formulario para editar el proveedor -->
-        <form id="editar-proveedor-form">
-          <input type="hidden" id="editar-id" name="editar-id">
-          <div class="mb-3">
-            <label for="editar-nombre">Nombre:</label>
-            <input type="text" class="form-control" id="editar-nombre" name="editar-nombre" required>
-          </div>
-          <div class="mb-3">
-            <label for="editar-direccion">Dirección:</label>
-            <input type="text" class="form-control" id="editar-direccion" name="editar-direccion">
-          </div>
-          <div class="mb-3">
-            <label for="editar-telefono">Teléfono:</label>
-            <input type="text" class="form-control" id="editar-telefono" name="editar-telefono">
-          </div>
-          <div class="mb-3">
-            <label for="editar-estado">Estado:</label>
-            <input type="text" class="form-control" id="editar-estado" name="editar-estado" required>
-          </div>
-          <button type="submit" class="btn btn-primary">Guardar cambios</button>
-        </form>
+  </section>
+  <!-- Modal para editar compra -->
+  <div class="modal fade" id="editarModal" tabindex="-1" aria-labelledby="editarModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="editarModalLabel">Editar Compra</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <!-- Formulario para editar la compra -->
+          <form id="editar-compra-form">
+            <input type="hidden" id="editar-id" name="editar-id">
+            <div class="mb-3">
+              <label for="editar-proveedor">Proveedor:</label>
+              <select class="form-control" id="editar-proveedor" name="editar-proveedor" required>
+                <!-- Las opciones se generarán dinámicamente desde la base de datos -->
+              </select>
+            </div>
+            <div class="mb-3">
+              <label for="editar-fecha">Fecha:</label>
+              <input type="date" class="form-control" id="editar-fecha" name="editar-fecha" required>
+            </div>
+            <div class="mb-3">
+              <label for="editar-total">Total:</label>
+              <input type="number" step="0.01" class="form-control" id="editar-total" name="editar-total" required>
+            </div>
+            <button type="submit" class="btn btn-primary">Guardar cambios</button>
+          </form>
+        </div>
       </div>
     </div>
-  </div>
-</div>
+  </div>  
 
-<!-- Modal para eliminar proveedor -->
-<div class="modal fade" id="eliminarModal" tabindex="-1" aria-labelledby="eliminarModalLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="eliminarModalLabel">Eliminar Proveedor</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <div class="modal-body">
-        <p>¿Estás seguro de que deseas eliminar este proveedor?</p>
-        <button type="button" class="btn btn-danger" id="eliminar-confirmar">Eliminar</button>
-      </div>
-    </div>
-  </div>
-</div>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js" integrity="sha512-9RBuRTFRJSXvsDxIYs3JyYyyGJ6AD2mV9H0FJdLmVtHlnJW/Lr/AtJt9PdyV0Vaj79LW6IeA5a/WI9Zbs8F2Zw==" crossorigin="anonymous"></script>
-
-<script>
-  // Obtener la referencia del tbody de la tabla
-  const proveedoresTableBody = document.getElementById('proveedores-table-body');
-
-  // Función para obtener la lista de proveedores desde la base de datos
-  function obtenerProveedores() {
-    // Realizar la solicitud GET a la ruta "/proveedores"
-    fetch('/proveedores')
-      .then(response => response.json())
-      .then(proveedores => {
-        // Limpiar el contenido existente del tbody
-        proveedoresTableBody.innerHTML = '';
-
-        // Iterar sobre los proveedores y crear las filas de la tabla
-        proveedores.forEach(proveedor => {
-          const row = document.createElement('tr');
-          row.innerHTML = `
-            <td>${proveedor.Id_Proveedor}</td>
-            <td>${proveedor.Nombre}</td>
-            <td>${proveedor.Dirección}</td>
-            <td>${proveedor.Telefono}</td>
-            <td>${proveedor.Estado}</td>
-            <td>
-              <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#editarModal" onclick="editarProveedor(${proveedor.Id_Proveedor})">Editar</button>
-              <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#eliminarModal" onclick="eliminarProveedor(${proveedor.Id_Proveedor})">Eliminar</button>
-            </td>
-          `;
-          proveedoresTableBody.appendChild(row);
+  </main ><!-- End #main -->
+  <script>
+    // Obtener la referencia del tbody de la tabla
+    const comprasTableBody = document.getElementById('compras-table-body');
+  
+    // Función para obtener la lista de compras desde la base de datos
+    function obtenerCompras() {
+      // Realizar la solicitud GET a la ruta "/compras"
+      fetch('/compras')
+        .then(response => response.json())
+        .then(compras => {
+          // Limpiar el contenido existente del tbody
+          comprasTableBody.innerHTML = '';
+  
+          // Iterar sobre las compras y crear las filas de la tabla
+          compras.forEach(compra => {
+            const row = document.createElement('tr');
+            row.innerHTML = `
+              <td>${compra.Id_Compra}</td>
+              <td>${compra.Id_Proveedor}</td>
+              <td>${compra.Fecha_Compra}</td>
+              <td>${compra.Total}</td>
+              <td>${compra.Id_Usuario}</td>
+              <td>${compra.Sub_Total}</td>
+              <td>${compra.IVA}</td>
+              <td>${compra.Descuento}</td>
+              <td>${compra.Estado}</td>
+              <td>
+                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#editarModal" onclick="editarCompra(${compra.Id_Compra})">Editar</button>
+                <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#eliminarModal" onclick="eliminarCompra(${compra.Id_Compra})">Eliminar</button>
+              </td>
+            `;
+            comprasTableBody.appendChild(row);
+          });
+        })
+        .catch(error => {
+          console.error('Error al obtener las compras', error);
+          // Manejar el error en caso de fallo en la solicitud
         });
-      })
-      .catch(error => {
-        console.error('Error al obtener los proveedores', error);
-        // Manejar el error en caso de fallo en la solicitud
-      });
-  }
-
-  // Llamar a la función obtenerProveedores al cargar la página
-  obtenerProveedores();
-</script>
-
-
-    
+    }
+  
+    // Llamar a la función obtenerCompras al cargar la página
+    obtenerCompras();
+  </script>
+  
   <!-- ======= Footer ======= -->
   <footer id="footer" class="footer">
     <div class="text-center">
@@ -385,6 +382,7 @@
 </footer>
 <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
 <!-- ======= End Footer ======= -->
+
 
   <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
 
