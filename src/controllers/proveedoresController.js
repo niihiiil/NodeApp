@@ -21,14 +21,11 @@ const getProveedores = async (req, res) => {
 // Guardar un proveedor en la base de datos
 const guardarProveedor = async (req, res) => {
   try {
-    const { nombre, direccion, telefono } = req.body;
-
-    // Conectar a la base de datos
+    const { nombre, direccion, telefono, estado } = req.body;
     await sql.connect(dbConfig);
 
-    // Realizar la consulta para guardar el proveedor
     await sql.query(
-      `INSERT INTO proveedor (nombre, direccion, telefono) VALUES ('${nombre}', '${direccion}', '${telefono}')`
+      `INSERT INTO proveedor (Nombre, Dirección, Telefono, Estado) VALUES ('${nombre}', '${direccion}', '${telefono}', '${estado}')`
     );
 
     res.status(201).json({ message: 'Proveedor guardado exitosamente' });
@@ -42,14 +39,11 @@ const guardarProveedor = async (req, res) => {
 const editarProveedor = async (req, res) => {
   try {
     const { id } = req.params;
-    const { nombre, direccion, telefono } = req.body;
+    const { nombre, direccion, telefono, estado } = req.body;
 
-    // Conectar a la base de datos
     await sql.connect(dbConfig);
-
-    // Realizar la consulta para editar el proveedor
     await sql.query(
-      `UPDATE proveedor SET nombre = '${nombre}', direccion = '${direccion}', telefono = '${telefono}' WHERE id = ${id}`
+      `INSERT INTO proveedor (Nombre, Dirección, Telefono, Estado) VALUES ('${nombre}', '${direccion}', '${telefono}', '${estado}') WHERE Id_Proveedor = ${id}`
     );
 
     res.json({ message: 'Proveedor editado exitosamente' });
@@ -59,16 +53,13 @@ const editarProveedor = async (req, res) => {
   }
 };
 
-// Eliminar un proveedor de la base de datos
 const eliminarProveedor = async (req, res) => {
   try {
     const { id } = req.params;
 
-    // Conectar a la base de datos
     await sql.connect(dbConfig);
 
-    // Realizar la consulta para eliminar el proveedor
-    await sql.query(`DELETE FROM proveedor WHERE id = ${id}`);
+    await sql.query(`DELETE FROM proveedor WHERE Id_Proveedor = ${id}`);
 
     res.json({ message: 'Proveedor eliminado exitosamente' });
   } catch (error) {
@@ -76,6 +67,7 @@ const eliminarProveedor = async (req, res) => {
     res.status(500).json({ error: 'Error al eliminar el proveedor' });
   }
 };
+
 
 module.exports = {
   getProveedores,

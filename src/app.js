@@ -27,17 +27,14 @@ app.use(express.json());
 // Configurar rutas estáticas
 app.use(express.static(path.join(__dirname, 'public')));
 
+const proveedoresRoutes = require('./routes/proveedoresRoutes');
+app.use('/proveedores', proveedoresRoutes);
 // Rutas controladores de proveedores
 app.get('/proveedores', proveedoresController.getProveedores);
 app.post('/proveedores', proveedoresController.guardarProveedor);
 app.put('/proveedores/:idProveedor', proveedoresController.editarProveedor);
 app.delete('/proveedores/:idProveedor', proveedoresController.eliminarProveedor);
 
-// Rutas controladores de compras
-app.get('/compras', comprasController.getCompras);
-app.post('/compras', comprasController.guardarCompra);
-app.put('/compras/:idCompra', comprasController.editarCompra);
-app.delete('/compras/:idCompra', comprasController.eliminarCompra);
 
 // Iniciar el servidor
 app.listen(port, () => {

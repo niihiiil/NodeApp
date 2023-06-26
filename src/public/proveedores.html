@@ -221,6 +221,25 @@
   </aside><!-- End Sidebar-->
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
   <main id="main" class="main">
     <div class="pagetitle">
       <h1>Proveedores</h1>
@@ -256,7 +275,7 @@
     <div class="card">
       <div class="card-body">
         <h5 class="card-title">Agregar Proveedor</h5>
-        <form id="proveedor-form">
+        <form id="proveedorForm">
           <div class="mb-3">
             <label for="nombre">Nombre:</label>
             <input type="text" class="form-control" id="nombre" name="nombre" required>
@@ -273,7 +292,7 @@
             <label for="estado">Estado:</label>
             <input type="text" class="form-control" id="estado" name="estado" required>
           </div>
-          <button type="submit" class="btn btn-primary">Guardar</button>
+          <button type="submit" class="btn btn-primary" id="guardarButton">Guardar</button>
         </form>
       </div>
     </div>
@@ -340,14 +359,12 @@
 
   // Función para obtener la lista de proveedores desde la base de datos
   function obtenerProveedores() {
-    // Realizar la solicitud GET a la ruta "/proveedores"
+ 
     fetch('/proveedores')
       .then(response => response.json())
       .then(proveedores => {
-        // Limpiar el contenido existente del tbody
         proveedoresTableBody.innerHTML = '';
 
-        // Iterar sobre los proveedores y crear las filas de la tabla
         proveedores.forEach(proveedor => {
           const row = document.createElement('tr');
           row.innerHTML = `
@@ -366,16 +383,161 @@
       })
       .catch(error => {
         console.error('Error al obtener los proveedores', error);
-        // Manejar el error en caso de fallo en la solicitud
+      });
+  }
+  obtenerProveedores();
+
+  // Guardado
+  document.getElementById('proveedorForm').addEventListener('submit', function(event) {
+    event.preventDefault(); 
+
+
+    const nombre = document.getElementById('nombre').value;
+    const direccion = document.getElementById('direccion').value;
+    const telefono = document.getElementById('telefono').value;
+    const estado = document.getElementById('estado').value;
+
+    // Crear un objeto con los datos del proveedor
+    const proveedor = {
+      nombre,
+      direccion,
+      telefono,
+      estado
+    };
+
+    fetch('/proveedores', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(proveedor)
+    })
+      .then(response => response.json())
+      .then(response => {
+        console.log('Proveedor guardado exitosamente', response);
+
+        document.getElementById('nombre').value = '';
+        document.getElementById('direccion').value = '';
+        document.getElementById('telefono').value = '';
+        document.getElementById('estado').value = '';
+
+        obtenerProveedores();
+      })
+      .catch(error => {
+        console.error('Error al guardar el proveedor', error);
+      });
+  });
+
+  // Editado
+  function editarProveedor(idProveedor) {
+
+    fetch(`/proveedores/${idProveedor}`)
+      .then(response => response.json())
+      .then(proveedor => {
+        // Rellenar los campos del formulario de edición con los datos del proveedor
+        document.getElementById('editar-id').value = proveedor.Id_Proveedor;
+        document.getElementById('editar-nombre').value = proveedor.Nombre;
+        document.getElementById('editar-direccion').value = proveedor.Dirección;
+        document.getElementById('editar-telefono').value = proveedor.Telefono;
+        document.getElementById('editar-estado').value = proveedor.Estado;
+      })
+      .catch(error => {
+        console.error(`Error al obtener los datos del proveedor con ID ${idProveedor}`, error);
       });
   }
 
-  // Llamar a la función obtenerProveedores al cargar la página
-  obtenerProveedores();
+  // guardar info del form
+  document.getElementById('editar-proveedor-form').addEventListener('submit', function(event) {
+    event.preventDefault(); 
+  
+    const idProveedor = document.getElementById('editar-id').value;
+    const nombre = document.getElementById('editar-nombre').value;
+    const direccion = document.getElementById('editar-direccion').value;
+    const telefono = document.getElementById('editar-telefono').value;
+    const estado = document.getElementById('editar-estado').value;
+
+    const proveedorActualizado = {
+      idProveedor,
+      nombre,
+      direccion,
+      telefono,
+      estado
+    };
+
+    fetch(`/proveedores/${idProveedor}`, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(proveedorActualizado)
+    })
+      .then(response => response.json())
+      .then(response => {
+        console.log('Proveedor actualizado exitosamente', response);
+
+        // Cerrar modal
+        const editarModal = document.getElementById('editarModal');
+        const bootstrapModal = bootstrap.Modal.getInstance(editarModal);
+        bootstrapModal.hide();
+
+  
+        obtenerProveedores();
+      })
+      .catch(error => {
+        console.error(`Error al actualizar el proveedor con ID ${idProveedor}`, error);
+      });
+  });
+
+  function eliminarProveedor(idProveedor) {
+
+    const eliminarConfirmarButton = document.getElementById('eliminar-confirmar');
+    eliminarConfirmarButton.addEventListener('click', function() {
+ 
+      fetch(`/proveedores/${id}`, {
+        method: 'DELETE'
+      })
+        .then(response => response.json())
+        .then(response => {
+          console.log('Proveedor eliminado exitosamente', response);
+
+          // Cerrar modal
+          const eliminarModal = document.getElementById('eliminarModal');
+          const bootstrapModal = bootstrap.Modal.getInstance(eliminarModal);
+          bootstrapModal.hide();
+
+          obtenerProveedores();
+        })
+        .catch(error => {
+          console.error(`Error al eliminar el proveedor con ID ${idProveedor}`, error);
+        });
+    });
+  }
 </script>
 
 
-    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
   <!-- ======= Footer ======= -->
   <footer id="footer" class="footer">
     <div class="text-center">
