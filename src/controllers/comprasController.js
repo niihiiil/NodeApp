@@ -4,13 +4,10 @@ const dbConfig = require('../database/dbConfig');
 // Obtener las compras desde la base de datos
 const getCompras = async (req, res) => {
   try {
-    // Conectar a la base de datos
     await sql.connect(dbConfig);
 
-    // Realizar la consulta para obtener las compras
     const result = await sql.query('SELECT * FROM Compra');
 
-    // Enviar las compras como respuesta
     res.json(result.recordset);
   } catch (error) {
     console.error('Error al obtener las compras', error);
@@ -18,7 +15,6 @@ const getCompras = async (req, res) => {
   }
 };
 
-// Guardar una compra en la base de datos
 const guardarCompra = async (req, res) => {
   try {
     const { Id_Proveedor, Fecha_Compra, Total, Id_Usuario, Sub_Total, IVA, Descuento, Estado } = req.body;

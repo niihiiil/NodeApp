@@ -15,9 +15,8 @@ const getProveedores = async (req, res) => {
   } catch (error) {
     console.error('Error al obtener los proveedores', error);
     res.status(500).json({ error: 'Error al obtener los proveedores' });
-  } 
+  }
 };
-
 // Guardar un proveedor en la base de datos
 const guardarProveedor = async (req, res) => {
   try {
@@ -34,28 +33,31 @@ const guardarProveedor = async (req, res) => {
     res.status(500).json({ error: 'Error al guardar el proveedor' });
   }
 };
-
+//xq en mi sqlxd? 
+// no me sale la terminal we, mandame ss de que tira, sale un error pero no lo puedo leer
+// ya me salio:
+//   originalError: Error: Invalid column name 'undefined'.
+// Editar un proveedor en la base de datos
 // Editar un proveedor en la base de datos
 const editarProveedor = async (req, res) => {
   try {
-    const { id } = req.params;
+    const id  = req.params.idProveedor;
     const { nombre, direccion, telefono, estado } = req.body;
 
     await sql.connect(dbConfig);
     await sql.query(
-      `INSERT INTO proveedor (Nombre, Dirección, Telefono, Estado) VALUES ('${nombre}', '${direccion}', '${telefono}', '${estado}') WHERE Id_Proveedor = ${id}`
+      `UPDATE proveedor SET Nombre = '${nombre}', Dirección = '${direccion}', Telefono = '${telefono}', Estado = '${estado}' WHERE Id_Proveedor = ${id}`
     );
 
-    res.json({ message: 'Proveedor editado exitosamente' });
+    res.json({ message: 'Proveedor editado exitosamente', id, nombre, direccion, telefono, estado });
   } catch (error) {
-    console.error('Error al editar el proveedor', error);
     res.status(500).json({ error: 'Error al editar el proveedor' });
   }
 };
 
 const eliminarProveedor = async (req, res) => {
   try {
-    const { id } = req.params;
+    const id = req.params.idProveedor;
 
     await sql.connect(dbConfig);
 
@@ -64,7 +66,7 @@ const eliminarProveedor = async (req, res) => {
     res.json({ message: 'Proveedor eliminado exitosamente' });
   } catch (error) {
     console.error('Error al eliminar el proveedor', error);
-    res.status(500).json({ error: 'Error al eliminar el proveedor' });
+    res.status(500).json({ error: 'Error al eliminar el proveedor', req: req.params });
   }
 };
 

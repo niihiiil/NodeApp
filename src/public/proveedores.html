@@ -311,7 +311,7 @@
       </div>
       <div class="modal-body">
         <!-- Formulario para editar el proveedor -->
-        <form id="editar-proveedor-form">
+        <form id="editar-proveedor-form" >
           <input type="hidden" id="editar-id" name="editar-id">
           <div class="mb-3">
             <label for="editar-nombre">Nombre:</label>
@@ -329,7 +329,7 @@
             <label for="editar-estado">Estado:</label>
             <input type="text" class="form-control" id="editar-estado" name="editar-estado" required>
           </div>
-          <button type="submit" class="btn btn-primary">Guardar cambios</button>
+          <button type="button" class="btn btn-primary" onclick="editarProveedor()">Guardar cambios</button>
         </form>
       </div>
     </div>
@@ -346,7 +346,7 @@
       </div>
       <div class="modal-body">
         <p>¿Estás seguro de que deseas eliminar este proveedor?</p>
-        <button type="button" class="btn btn-danger" id="eliminar-confirmar">Eliminar</button>
+        <button type="button" class="btn btn-danger" id="eliminar-confirmar" onclick="eliminarProveedor()">Eliminar</button>
       </div>
     </div>
   </div>
@@ -357,9 +357,16 @@
   // Obtener la referencia del tbody de la tabla
   const proveedoresTableBody = document.getElementById('proveedores-table-body');
 
-  // Función para obtener la lista de proveedores desde la base de datos
+  function setDatasetIdProv(id, editar = true) {
+    if( editar ) {
+      document.getElementById('editar-proveedor-form').dataset.id = id;
+      return
+    }
+
+    document.getElementById('eliminarModal').dataset.id = id;
+  }
+
   function obtenerProveedores() {
- 
     fetch('/proveedores')
       .then(response => response.json())
       .then(proveedores => {
@@ -367,6 +374,8 @@
 
         proveedores.forEach(proveedor => {
           const row = document.createElement('tr');
+          row.id = `proveedor-${proveedor.Id_Proveedor}`;
+          row.dataset.id = proveedor.Id_Proveedor;
           row.innerHTML = `
             <td>${proveedor.Id_Proveedor}</td>
             <td>${proveedor.Nombre}</td>
@@ -374,8 +383,8 @@
             <td>${proveedor.Telefono}</td>
             <td>${proveedor.Estado}</td>
             <td>
-              <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#editarModal" onclick="editarProveedor(${proveedor.Id_Proveedor})">Editar</button>
-              <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#eliminarModal" onclick="eliminarProveedor(${proveedor.Id_Proveedor})">Eliminar</button>
+              <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#editarModal" onclick="setDatasetIdProv(${proveedor.Id_Proveedor})">Editar</button>
+              <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#eliminarModal" onclick="setDatasetIdProv(${proveedor.Id_Proveedor}, false)">Eliminar</button>
             </td>
           `;
           proveedoresTableBody.appendChild(row);
@@ -385,6 +394,7 @@
         console.error('Error al obtener los proveedores', error);
       });
   }
+
   obtenerProveedores();
 
   // Guardado
@@ -429,21 +439,53 @@
   });
 
   // Editado
-  function editarProveedor(idProveedor) {
+  async function editarProveedor() {
+    const idProveedor = document.querySelector('#editar-proveedor-form').dataset.id;
 
-    fetch(`/proveedores/${idProveedor}`)
-      .then(response => response.json())
-      .then(proveedor => {
-        // Rellenar los campos del formulario de edición con los datos del proveedor
-        document.getElementById('editar-id').value = proveedor.Id_Proveedor;
-        document.getElementById('editar-nombre').value = proveedor.Nombre;
-        document.getElementById('editar-direccion').value = proveedor.Dirección;
-        document.getElementById('editar-telefono').value = proveedor.Telefono;
-        document.getElementById('editar-estado').value = proveedor.Estado;
+    const req = await fetch(`/proveedores/${idProveedor}`, {
+      method: "PUT",
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        nombre: document.querySelector('#editar-nombre').value,
+        direccion: document.querySelector('#editar-direccion').value,
+        telefono: document.querySelector('#editar-telefono').value,
+        estado: document.querySelector('#editar-estado').value,
       })
-      .catch(error => {
-        console.error(`Error al obtener los datos del proveedor con ID ${idProveedor}`, error);
-      });
+    })
+
+    const res = await req.json();
+
+    if(res.error) {
+      // Handlear error
+      alert("RIP");
+      console.error(`Error al obtener los datos del proveedor con ID ${idProveedor}`, res.error);
+      return;
+    }
+
+    // Update table
+    const tr = document.querySelector(`#proveedor-${idProveedor}`);
+    tr.innerHTML = `
+      <td>${res.id}</td>
+      <td>${res.nombre}</td>
+      <td>${res.direccion}</td>
+      <td>${res.telefono}</td>
+      <td>${res.estado}</td>
+      <td>
+        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#editarModal" onclick="setDatasetIdProv(${res.id})">Editar</button>
+        <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#eliminarModal" onclick="setDatasetIdProv(${res.id}, false)">Eliminar</button>
+      </td>
+    `;
+
+    closeModal();
+  }
+
+  function closeModal() {
+     // Cerrar modal
+    const editarModal = document.getElementById('editarModal');
+    const bootstrapModal = bootstrap.Modal.getInstance(editarModal);
+    bootstrapModal.hide();
   }
 
   // guardar info del form
@@ -488,11 +530,11 @@
       });
   });
 
-  function eliminarProveedor(idProveedor) {
+  function eliminarProveedor() {
+    const id = document.querySelector('#eliminarModal').dataset.id;
 
     const eliminarConfirmarButton = document.getElementById('eliminar-confirmar');
     eliminarConfirmarButton.addEventListener('click', function() {
- 
       fetch(`/proveedores/${id}`, {
         method: 'DELETE'
       })
@@ -508,7 +550,7 @@
           obtenerProveedores();
         })
         .catch(error => {
-          console.error(`Error al eliminar el proveedor con ID ${idProveedor}`, error);
+          console.error(`Error al eliminar el proveedor con ID ${id}`, error);
         });
     });
   }
