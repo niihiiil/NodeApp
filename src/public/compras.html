@@ -213,88 +213,88 @@
           </li>
         </ul>
       </li><!-- End Proveedores Nav -->
-      
-
   </aside><!-- End Sidebar-->
+
+
+
+
+
+
+
+
+
 
   <main id="main" class="main">
     <div class="pagetitle">
-        <h1>Proveedores</h1>
-        <nav>
-          <ol class="breadcrumb">
-            <li class="breadcrumb-item"><a href="index.html">Home</a></li>
-            <li class="breadcrumb-item">CRUD</li>
-            <li class="breadcrumb-item active">Proveedores</li>
-          </ol>
-        </nav>
-      </div><!-- End Page Title -->
-
-<!-- Table with stripped rows -->
-<table class="table datatable">
+      <h1>Compras</h1>
+      <nav>
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item"><a href="index.html">Home</a></li>
+          <li class="breadcrumb-item">CRUD</li>
+          <li class="breadcrumb-item active">Compras</li>
+        </ol>
+      </nav>
+    </div><!-- End Page Title -->
+  
+    <!-- Table with stripped rows -->
+    <table class="table datatable">
       <thead>
-    <tr>
-      <th scope="col">ID Compra</th>
-      <th scope="col">ID Proveedor</th>
-      <th scope="col">Fecha de Compra</th>
-      <th scope="col">Total</th>
-      <th scope="col">Sub Total</th>
-      <th scope="col">IVA</th>
-      <th scope="col">Descuento</th>
-      <th scope="col">Estado</th>
-    </tr>
-  </thead>
-  <tbody id="compras-table-body">
-    <!-- Aquí se generarán dinámicamente las filas de la tabla -->
-  </tbody>
-</table>
-<!-- End Table with stripped rows -->
-<div class="row">
-    <div class="col-lg-6">
-      <div class="card">
-        <div class="card-body">
-          <h5 class="card-title">Agregar Compra</h5>
-          <form id="compra-form">
-            <div class="mb-3">
-              <label for="proveedor">Proveedor:</label>
-              <select class="form-control" id="proveedor" name="proveedor" required>
-                <!-- Las opciones se generarán dinámicamente desde la base de datos -->
-              </select>
-            </div>
-            <div class="mb-3">
-              <label for="fecha">Fecha:</label>
-              <input type="date" class="form-control" id="fecha" name="fecha" required>
-            </div>
-            <div class="mb-3">
-              <label for="total">Total:</label>
-              <input type="number" step="0.01" class="form-control" id="total" name="total" required>
-            </div>
-            <div class="mb-3">
-              <label for="subtotal">Sub Total:</label>
-              <input type="number" step="0.01" class="form-control" id="subtotal" name="subtotal" required>
-            </div>
-            <div class="mb-3">
-              <label for="iva">IVA:</label>
-              <input type="number" step="0.01" class="form-control" id="iva" name="iva">
-            </div>
-            <div class="mb-3">
-              <label for="descuento">Descuento:</label>
-              <input type="number" step="0.01" class="form-control" id="descuento" name="descuento">
-            </div>
-            <div class="mb-3">
-              <label for="estado">Estado:</label>
-              <select class="form-control" id="estado" name="estado" required>
-                <option value="1">Activo</option>
-                <option value="0">Inactivo</option>
-              </select>
-            </div>
-            <button type="submit" class="btn btn-primary">Guardar</button>
-          </form>
+        <tr>
+          <th scope="col">ID Compra</th>
+          <th scope="col">ID Proveedor</th>
+          <th scope="col">Fecha Compra</th>
+          <th scope="col">Total</th>
+          <th scope="col">Sub Total</th>
+          <th scope="col">Descuento</th>
+          <th scope="col">Estado</th>
+          <th scope="col">Acciones</th>
+        </tr>
+      </thead>
+      <tbody id="compras-table-body">
+        <!-- Aquí se generarán dinámicamente las filas de la tabla -->
+      </tbody>
+    </table>
+    <!-- End Table with stripped rows -->
+  
+    <div class="row">
+      <div class="col-lg-6">
+        <div class="card">
+          <div class="card-body">
+            <h5 class="card-title">Agregar Compra</h5>
+            <form id="compraForm">
+              <div class="mb-3">
+                <label for="id-proveedor">ID Proveedor:</label>
+                <input type="text" class="form-control" id="idProveedor" name="id-proveedor" required>
+              </div>
+              <div class="mb-3">
+                <label for="fecha-compra">Fecha Compra:</label>
+                <input type="text" class="form-control" id="fechaCompra" name="fecha-compra" required>
+              </div>
+              <div class="mb-3">
+                <label for="total">Total:</label>
+                <input type="text" class="form-control" id="total" name="total" step="0.01" required>
+              </div>
+              <div class="mb-3">
+                <label for="sub-total">Sub Total:</label>
+                <input type="number" class="form-control" id="subTotal" name="sub-total" step="0.01" required>
+              </div>
+              <div class="mb-3">
+                <label for="descuento">Descuento:</label>
+                <input type="number" class="form-control" id="descuento" name="descuento" step="0.01">
+              </div>
+              <div class="mb-3">
+                <label for="estado">Estado:</label>
+                <input type="text" class="form-control" id="estado" name="estado" required>
+              </div>
+              <button type="submit" class="btn btn-primary" id="guardarButton">Guardar</button>
+            </form>
+          </div>
         </div>
       </div>
     </div>
-  </div>
-
+  
   </section>
+  
   <!-- Modal para editar compra -->
   <div class="modal fade" id="editarModal" tabindex="-1" aria-labelledby="editarModalLabel" aria-hidden="true">
     <div class="modal-dialog">
@@ -306,58 +306,91 @@
         <div class="modal-body">
           <!-- Formulario para editar la compra -->
           <form id="editar-compra-form">
-            <input type="hidden" id="editar-id" name="editar-id">
+            <input type="hidden" id="editar-id-compra" name="editar-id-compra">
             <div class="mb-3">
-              <label for="editar-proveedor">Proveedor:</label>
-              <select class="form-control" id="editar-proveedor" name="editar-proveedor" required>
-                <!-- Las opciones se generarán dinámicamente desde la base de datos -->
-              </select>
+              <label for="editar-id-proveedor">ID Proveedor:</label>
+              <input type="number" class="form-control" id="editar-idProveedor" name="editar-id-proveedor" required>
             </div>
             <div class="mb-3">
-              <label for="editar-fecha">Fecha:</label>
-              <input type="date" class="form-control" id="editar-fecha" name="editar-fecha" required>
+              <label for="editar-fecha-compra">Fecha Compra:</label>
+              <input type="text" class="form-control" id="editar-fechaCompra" name="editar-fecha-compra" required>
             </div>
             <div class="mb-3">
               <label for="editar-total">Total:</label>
-              <input type="number" step="0.01" class="form-control" id="editar-total" name="editar-total" required>
+              <input type="number" class="form-control" id="editar-total" name="editar-total" step="0.01" required>
             </div>
-            <button type="submit" class="btn btn-primary">Guardar cambios</button>
+          
+            <div class="mb-3">
+              <label for="editar-sub-total">Sub Total:</label>
+              <input type="number" class="form-control" id="editar-subTotal" name="editar-sub-total" step="0.01" required>
+            </div>
+            <div class="mb-3">
+              <label for="editar-descuento">Descuento:</label>
+              <input type="number" class="form-control" id="editar-descuento" name="editar-descuento" step="0.01">
+            </div>
+            <div class="mb-3">
+              <label for="editar-estado">Estado:</label>
+              <input type="text" class="form-control" id="editar-estado" name="editar-estado" required>
+            </div>
+            <button type="button" class="btn btn-primary" onclick="editarCompra()">Guardar cambios</button>
           </form>
         </div>
       </div>
     </div>
-  </div>  
-
-  </main ><!-- End #main -->
+  </div>
+  
+  <!-- Modal para eliminar compra -->
+  <div class="modal fade" id="eliminarModal" tabindex="-1" aria-labelledby="eliminarModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="eliminarModalLabel">Eliminar Compra</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <p>¿Estás seguro de que deseas eliminar esta compra?</p>
+          <button type="button" class="btn btn-danger" id="eliminar-confirmar" onclick="eliminarCompra()">Eliminar</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js" integrity="sha512-9RBuRTFRJSXvsDxIYs3JyYyyGJ6AD2mV9H0FJdLmVtHlnJW/Lr/AtJt9PdyV0Vaj79LW6IeA5a/WI9Zbs8F2Zw==" crossorigin="anonymous"></script>
+  
   <script>
     // Obtener la referencia del tbody de la tabla
     const comprasTableBody = document.getElementById('compras-table-body');
   
-    // Función para obtener la lista de compras desde la base de datos
+    
+  function setDatasetIdCompra(id, editar = true) {
+    if( editar ) {
+      document.getElementById('editar-compra-form').dataset.id = id;
+      return
+    }
+
+    document.getElementById('eliminarModal').dataset.id = id;
+  }
+
     function obtenerCompras() {
-      // Realizar la solicitud GET a la ruta "/compras"
       fetch('/compras')
         .then(response => response.json())
         .then(compras => {
-          // Limpiar el contenido existente del tbody
           comprasTableBody.innerHTML = '';
   
-          // Iterar sobre las compras y crear las filas de la tabla
           compras.forEach(compra => {
             const row = document.createElement('tr');
+            row.id = `compra-${compra.Id_Compra}`;
+            row.dataset.id = compra.Id_Compra;
             row.innerHTML = `
               <td>${compra.Id_Compra}</td>
               <td>${compra.Id_Proveedor}</td>
               <td>${compra.Fecha_Compra}</td>
               <td>${compra.Total}</td>
-              <td>${compra.Id_Usuario}</td>
               <td>${compra.Sub_Total}</td>
-              <td>${compra.IVA}</td>
               <td>${compra.Descuento}</td>
               <td>${compra.Estado}</td>
               <td>
-                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#editarModal" onclick="editarCompra(${compra.Id_Compra})">Editar</button>
-                <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#eliminarModal" onclick="eliminarCompra(${compra.Id_Compra})">Eliminar</button>
+                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#editarModal" onclick="setDatasetIdCompra(${compra.Id_Compra})">Editar</button>
+                <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#eliminarModal" onclick="setDatasetIdCompra(${compra.Id_Compra}, false)">Eliminar</button>
               </td>
             `;
             comprasTableBody.appendChild(row);
@@ -365,12 +398,204 @@
         })
         .catch(error => {
           console.error('Error al obtener las compras', error);
-          // Manejar el error en caso de fallo en la solicitud
         });
     }
-
+  
     obtenerCompras();
+  
+    // Guardado
+    document.getElementById('compraForm').addEventListener('submit', function(event) {
+      event.preventDefault(); 
+  
+  
+      const idProveedor = document.getElementById('idProveedor').value;
+      const fechaCompra = document.getElementById('fechaCompra').value;
+      const total = document.getElementById('total').value;
+      const subTotal = document.getElementById('subTotal').value;
+      const descuento = document.getElementById('descuento').value;
+      const estado = document.getElementById('estado').value;
+  
+      // Crear un objeto con los datos de la compra
+      const compra = {
+        idProveedor,
+        fechaCompra,
+        total,
+        subTotal,
+        descuento,
+        estado
+      };
+  
+      fetch('/compras', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(compra)
+      })
+        .then(response => response.json())
+        .then(response => {
+          console.log('Compra guardada exitosamente', response);
+  
+          document.getElementById('idProveedor').value = '';
+          document.getElementById('fechaCompra').value = '';
+          document.getElementById('total').value = '';
+          document.getElementById('subTotal').value = '';
+          document.getElementById('descuento').value = '';
+          document.getElementById('estado').value = '';
+  
+          obtenerCompras();
+        })
+        .catch(error => {
+          console.error('Error al guardar la compra', error);
+        });
+    });
+  
+    // Editado
+    async function editarCompra() {
+      const idCompra = document.querySelector('#editar-compra-form').dataset.id;
+  
+      const req = await fetch(`/compras/${idCompra}`, {
+        method: "PUT",
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          idProveedor: document.querySelector('#editar-idProveedor').value,
+          fechaCompra: document.querySelector('#editar-fechaCompra').value,
+          total: document.querySelector('#editar-total').value,
+          subTotal: document.querySelector('#editar-subTotal').value,
+          descuento: document.querySelector('#editar-descuento').value,
+          estado: document.querySelector('#editar-estado').value,
+        })
+      })
+  
+      const res = await req.json();
+  
+      if(res.error) {
+        // Handlear error
+        alert("RIP");
+        console.error(`Error al obtener los datos de la compra con ID ${idCompra}`, res.error);
+        return;
+      }
+  
+      // Update table
+      const tr = document.querySelector(`#compra-${idCompra}`);
+      tr.innerHTML = `
+        <td>${res.Id_Compra}</td>
+        <td>${res.Id_Proveedor}</td>
+        <td>${res.Fecha_Compra}</td>
+        <td>${res.Total}</td>
+        <td>${res.Sub_Total}</td>
+        <td>${res.Descuento}</td>
+        <td>${res.Estado}</td>
+        <td>
+          <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#editarModal" onclick="setDatasetIdCompra(${res.Id_Compra})">Editar</button>
+          <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#eliminarModal" onclick="setDatasetIdCompra(${res.Id_Compra}, false)">Eliminar</button>
+        </td>
+      `;
+  
+      closeModal();
+    }
+  
+    function closeModal() {
+       // Cerrar modal
+      const editarModal = document.getElementById('editarModal');
+      const bootstrapModal = bootstrap.Modal.getInstance(editarModal);
+      bootstrapModal.hide();
+    }
+  
+    // guardar info del form
+    document.getElementById('editar-compra-form').addEventListener('submit', function(event) {
+      event.preventDefault(); 
+    
+      const idCompra = document.getElementById('editar-idCompra').value;
+      const idProveedor = document.getElementById('editar-idProveedor').value;
+      const fechaCompra = document.getElementById('editar-fechaCompra').value;
+      const total = document.getElementById('editar-total').value;
+      const subTotal = document.getElementById('editar-subTotal').value;
+      const descuento = document.getElementById('editar-descuento').value;
+      const estado = document.getElementById('editar-estado').value;
+  
+      const compraActualizada = {
+        Id_Compra: idCompra,
+        Id_Proveedor: idProveedor,
+        Fecha_Compra: fechaCompra,
+        Total: total,
+        Sub_Total: subTotal,
+        Descuento: descuento,
+        Estado: estado
+      };
+  
+      fetch(`/compras/${idCompra}`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(compraActualizada)
+      })
+        .then(response => response.json())
+        .then(response => {
+          console.log('Compra actualizada exitosamente', response);
+  
+          // Cerrar modal
+          const editarModal = document.getElementById('editarModal');
+          const bootstrapModal = bootstrap.Modal.getInstance(editarModal);
+          bootstrapModal.hide();
+  
+          obtenerCompras();
+        })
+        .catch(error => {
+          console.error(`Error al actualizar la compra con ID ${idCompra}`, error);
+        });
+    });
+  
+    function eliminarCompra() {
+      const id = document.querySelector('#eliminarModal').dataset.id;
+  
+      const eliminarConfirmarButton = document.getElementById('eliminar-confirmar');
+      eliminarConfirmarButton.addEventListener('click', function() {
+        fetch(`/compras/${id}`, {
+          method: 'DELETE'
+        })
+          .then(response => response.json())
+          .then(response => {
+            console.log('Compra eliminada exitosamente', response);
+  
+            // Cerrar modal
+            const eliminarModal = document.getElementById('eliminarModal');
+            const bootstrapModal = bootstrap.Modal.getInstance(eliminarModal);
+            bootstrapModal.hide();
+  
+            obtenerCompras();
+          })
+          .catch(error => {
+            console.error(`Error al eliminar la compra con ID ${id}`, error);
+          });
+      });
+    }
   </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
   
   <!-- ======= Footer ======= -->
   <footer id="footer" class="footer">

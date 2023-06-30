@@ -33,12 +33,7 @@ const guardarProveedor = async (req, res) => {
     res.status(500).json({ error: 'Error al guardar el proveedor' });
   }
 };
-//xq en mi sqlxd? 
-// no me sale la terminal we, mandame ss de que tira, sale un error pero no lo puedo leer
-// ya me salio:
-//   originalError: Error: Invalid column name 'undefined'.
-// Editar un proveedor en la base de datos
-// Editar un proveedor en la base de datos
+
 const editarProveedor = async (req, res) => {
   try {
     const id  = req.params.idProveedor;
