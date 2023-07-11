@@ -5,9 +5,11 @@
   <meta charset="utf-8">
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
 
-  <title>NODE.js CRUD</title>
+  <title>CRUD - Node.js</title>
   <meta content="" name="description">
   <meta content="" name="keywords">
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" integrity="sha512-DadTlXpuprmhW/OnG/f6M3jVn8qNlYwWUryTC1JlU6PZzj8nyC1X5NU2rxmTJZn74XzzwawC6B4uPsM8XSw0Zg==" crossorigin="anonymous" />
 
   <!-- Favicons -->
   <link href="assets/img/favicon.png" rel="icon">
@@ -46,7 +48,7 @@
     <div class="d-flex align-items-center justify-content-between">
       <a href="index.html" class="logo d-flex align-items-center">
         <img src="assets/img/logo.png" alt="">
-        <span class="d-none d-lg-block">CRUD - Node.js</span>
+        <span class="d-none d-lg-block">LayoutVistas</span>
       </a>
       <i class="bi bi-list toggle-sidebar-btn"></i>
     </div><!-- End Logo -->
@@ -130,8 +132,8 @@
 
   </header><!-- End Header -->
 
-  <!-- ======= Sidebar ======= -->
-  <aside id="sidebar" class="sidebar">
+   <!-- ======= Sidebar ======= -->
+   <aside id="sidebar" class="sidebar">
 
     <ul class="sidebar-nav" id="sidebar-nav">
 
@@ -213,7 +215,11 @@
           </li>
         </ul>
       </li><!-- End Proveedores Nav -->
+      
+
+
   </aside><!-- End Sidebar-->
+
 
 
 
@@ -226,12 +232,12 @@
 
   <main id="main" class="main">
     <div class="pagetitle">
-      <h1>Compras</h1>
+      <h1>Categorías</h1>
       <nav>
         <ol class="breadcrumb">
           <li class="breadcrumb-item"><a href="index.html">Home</a></li>
           <li class="breadcrumb-item">CRUD</li>
-          <li class="breadcrumb-item active">Compras</li>
+          <li class="breadcrumb-item active">Categorías</li>
         </ol>
       </nav>
     </div><!-- End Page Title -->
@@ -240,17 +246,13 @@
     <table class="table datatable">
       <thead>
         <tr>
-          <th scope="col">ID Compra</th>
-          <th scope="col">ID Proveedor</th>
-          <th scope="col">Fecha Compra</th>
-          <th scope="col">Total</th>
-          <th scope="col">Sub Total</th>
-          <th scope="col">Descuento</th>
+          <th scope="col">ID Categoría</th>
+          <th scope="col">Nombre</th>
           <th scope="col">Estado</th>
           <th scope="col">Acciones</th>
         </tr>
       </thead>
-      <tbody id="compras-table-body">
+      <tbody id="categorias-table-body">
         <!-- Aquí se generarán dinámicamente las filas de la tabla -->
       </tbody>
     </table>
@@ -260,27 +262,11 @@
       <div class="col-lg-6">
         <div class="card">
           <div class="card-body">
-            <h5 class="card-title">Agregar Compra</h5>
-            <form id="compraForm">
+            <h5 class="card-title">Agregar Categoría</h5>
+            <form id="categoriaForm">
               <div class="mb-3">
-                <label for="id-proveedor">ID Proveedor:</label>
-                <input type="text" class="form-control" id="idProveedor" name="id-proveedor" required>
-              </div>
-              <div class="mb-3">
-                <label for="fecha-compra">Fecha Compra:</label>
-                <input type="text" class="form-control" id="fechaCompra" name="fecha-compra" required>
-              </div>
-              <div class="mb-3">
-                <label for="total">Total:</label>
-                <input type="text" class="form-control" id="total" name="total" step="0.01" required>
-              </div>
-              <div class="mb-3">
-                <label for="sub-total">Sub Total:</label>
-                <input type="number" class="form-control" id="subTotal" name="sub-total" step="0.01" required>
-              </div>
-              <div class="mb-3">
-                <label for="descuento">Descuento:</label>
-                <input type="number" class="form-control" id="descuento" name="descuento" step="0.01">
+                <label for="nombre">Nombre:</label>
+                <input type="text" class="form-control" id="nombre" name="nombre" required>
               </div>
               <div class="mb-3">
                 <label for="estado">Estado:</label>
@@ -295,285 +281,248 @@
   
   </section>
   
-  <!-- Modal para editar compra -->
+  <!-- Modal para editar categoría -->
   <div class="modal fade" id="editarModal" tabindex="-1" aria-labelledby="editarModalLabel" aria-hidden="true">
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title" id="editarModalLabel">Editar Compra</h5>
+          <h5 class="modal-title" id="editarModalLabel">Editar Categoría</h5>
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body">
-          <!-- Formulario para editar la compra -->
-          <form id="editar-compra-form">
-            <input type="hidden" id="editar-id-compra" name="editar-id-compra">
+          <!-- Formulario para editar la categoría -->
+          <form id="editar-categoria-form" >
+            <input type="hidden" id="editar-id" name="editar-id">
             <div class="mb-3">
-              <label for="editar-id-proveedor">ID Proveedor:</label>
-              <input type="number" class="form-control" id="editar-idProveedor" name="editar-id-proveedor" required>
-            </div>
-            <div class="mb-3">
-              <label for="editar-fecha-compra">Fecha Compra:</label>
-              <input type="text" class="form-control" id="editar-fechaCompra" name="editar-fecha-compra" required>
-            </div>
-            <div class="mb-3">
-              <label for="editar-total">Total:</label>
-              <input type="number" class="form-control" id="editar-total" name="editar-total" step="0.01" required>
-            </div>
-          
-            <div class="mb-3">
-              <label for="editar-sub-total">Sub Total:</label>
-              <input type="number" class="form-control" id="editar-subTotal" name="editar-sub-total" step="0.01" required>
-            </div>
-            <div class="mb-3">
-              <label for="editar-descuento">Descuento:</label>
-              <input type="number" class="form-control" id="editar-descuento" name="editar-descuento" step="0.01">
+              <label for="editar-nombre">Nombre:</label>
+              <input type="text" class="form-control" id="editar-nombre" name="editar-nombre" required>
             </div>
             <div class="mb-3">
               <label for="editar-estado">Estado:</label>
               <input type="text" class="form-control" id="editar-estado" name="editar-estado" required>
             </div>
-            <button type="button" class="btn btn-primary" onclick="editarCompra()">Guardar cambios</button>
+            <button type="button" class="btn btn-primary" onclick="editarCategoria()">Guardar cambios</button>
           </form>
         </div>
       </div>
     </div>
   </div>
   
-  <!-- Modal para eliminar compra -->
+  <!-- Modal para eliminar categoría -->
   <div class="modal fade" id="eliminarModal" tabindex="-1" aria-labelledby="eliminarModalLabel" aria-hidden="true">
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title" id="eliminarModalLabel">Eliminar Compra</h5>
+          <h5 class="modal-title" id="eliminarModalLabel">Eliminar Categoría</h5>
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body">
-          <p>¿Estás seguro de que deseas eliminar esta compra?</p>
-          <button type="button" class="btn btn-danger" id="eliminar-confirmar" onclick="eliminarCompra()">Eliminar</button>
+          <p>¿Estás seguro de que deseas eliminar esta categoría?</p>
+          <button type="button" class="btn btn-danger" id="eliminar-confirmar" onclick="eliminarCategoria()">Eliminar</button>
         </div>
       </div>
     </div>
   </div>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js" integrity="sha512-9RBuRTFRJSXvsDxIYs3JyYyyGJ6AD2mV9H0FJdLmVtHlnJW/Lr/AtJt9PdyV0Vaj79LW6IeA5a/WI9Zbs8F2Zw==" crossorigin="anonymous"></script>
   
-  <script>
-    // Obtener la referencia del tbody de la tabla
-    const comprasTableBody = document.getElementById('compras-table-body');
-  
-    
-  function setDatasetIdCompra(id, editar = true) {
-    if( editar ) {
-      document.getElementById('editar-compra-form').dataset.id = id;
-      return
-    }
 
-    document.getElementById('eliminarModal').dataset.id = id;
+
+
+
+
+
+
+
+  
+
+<script>
+ //Obtener la referencia del tbody de la tabla
+ const categoriasTableBody = document.querySelector("#categorias-table-body");
+
+function setDatasetIdCat(id, editar = true) {
+    if (editar) {
+        document.getElementById('editar-categoria-form').dataset.id = id;
+    return
+}
+document.getElementById('eliminarModal').dataset.id = id;
+}
+
+function obtenerCategorias() {
+  fetch('/categorias')
+    .then(response => response.json())
+    .then(categorias => {
+      categoriasTableBody.innerHTML = '';
+
+      categorias.forEach(categoria => {
+        const row = document.createElement('tr');
+        row.id = `categoria-${categoria.Id_Categoria}`;
+        row.dataset.id = categoria.Id_Categoria;
+        row.innerHTML = `
+          <td>${categoria.Id_Categoria}</td>
+          <td>${categoria.Nombre}</td>
+          <td>${categoria.Estado}</td>
+          <td>
+            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#editarModal" onclick="setDatasetIdCat(${categoria.Id_Categoria})">Editar</button>
+            <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#eliminarModal" onclick="setDatasetIdCat(${categoria.Id_Categoria}, false)">Eliminar</button>
+          </td>
+        `;
+        categoriasTableBody.appendChild(row);
+      });
+    })
+    .catch(error => {
+      console.error('Error al obtener las categorías', error);
+    });
+}
+
+obtenerCategorias();
+
+//guardado
+
+document.getElementById('categoriaForm').addEventListener('submit', function(event) {
+  event.preventDefault();
+
+  const nombre = document.getElementById('nombre').value;
+  const estado = document.getElementById('estado').value;
+
+  // Crear un objeto con los datos de la categoría
+  const categoria = {
+    nombre,
+    estado
+  };
+
+  fetch('/categorias', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(categoria)
+  })
+    .then(response => response.json())
+    .then(response => {
+      console.log('Categoría guardada exitosamente', response);
+
+      document.getElementById('nombre').value = '';
+      document.getElementById('estado').value = '';
+
+      obtenerCategorias();
+    })
+    .catch(error => {
+      console.error('Error al guardar la categoría', error);
+    });
+});
+
+//editado
+
+async function editarCategoria() {
+  const idCategoria = document.querySelector('#editar-categoria-form').dataset.id;
+
+  const req = await fetch(`/categorias/${idCategoria}`, {
+    method: "PUT",
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({
+      nombre: document.querySelector('#editar-nombre').value,
+      estado: document.querySelector('#editar-estado').value,
+    })
+  });
+
+  const res = await req.json();
+
+  if (res.error) {
+    // Manejar error
+    alert("Ocurrió un error al editar la categoría");
+    console.error(`Error al obtener los datos de la categoría con ID ${idCategoria}`, res.error);
+    return;
   }
 
-    function obtenerCompras() {
-      fetch('/compras')
-        .then(response => response.json())
-        .then(compras => {
-          comprasTableBody.innerHTML = '';
-  
-          compras.forEach(compra => {
-            const row = document.createElement('tr');
-            row.id = `compra-${compra.Id_Compra}`;
-            row.dataset.id = compra.Id_Compra;
-            row.innerHTML = `
-              <td>${compra.Id_Compra}</td>
-              <td>${compra.Id_Proveedor}</td>
-              <td>${compra.Fecha_Compra}</td>
-              <td>${compra.Total}</td>
-              <td>${compra.Sub_Total}</td>
-              <td>${compra.Descuento}</td>
-              <td>${compra.Estado}</td>
-              <td>
-                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#editarModal" onclick="setDatasetIdCompra(${compra.Id_Compra})">Editar</button>
-                <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#eliminarModal" onclick="setDatasetIdCompra(${compra.Id_Compra}, false)">Eliminar</button>
-              </td>
-            `;
-            comprasTableBody.appendChild(row);
-          });
-        })
-        .catch(error => {
-          console.error('Error al obtener las compras', error);
-        });
-    }
-  
-    obtenerCompras();
-  
-    // Guardado
-    document.getElementById('compraForm').addEventListener('submit', function(event) {
-      event.preventDefault(); 
-  
-  
-      const idProveedor = document.getElementById('idProveedor').value;
-      const fechaCompra = document.getElementById('fechaCompra').value;
-      const total = document.getElementById('total').value;
-      const subTotal = document.getElementById('subTotal').value;
-      const descuento = document.getElementById('descuento').value;
-      const estado = document.getElementById('estado').value;
-  
-      // Crear un objeto con los datos de la compra
-      const compra = {
-        idProveedor,
-        fechaCompra,
-        total,
-        subTotal,
-        descuento,
-        estado
-      };
-  
-      fetch('/compras', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(compra)
-      })
-        .then(response => response.json())
-        .then(response => {
-          console.log('Compra guardada exitosamente', response);
-  
-          document.getElementById('idProveedor').value = '';
-          document.getElementById('fechaCompra').value = '';
-          document.getElementById('total').value = '';
-          document.getElementById('subTotal').value = '';
-          document.getElementById('descuento').value = '';
-          document.getElementById('estado').value = '';
-  
-          obtenerCompras();
-        })
-        .catch(error => {
-          console.error('Error al guardar la compra', error);
-        });
-    });
-  
-    // Editado
-    async function editarCompra() {
-      const idCompra = document.querySelector('#editar-compra-form').dataset.id;
-  
-      const req = await fetch(`/compras/${idCompra}`, {
-        method: "PUT",
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-          idProveedor: document.querySelector('#editar-idProveedor').value,
-          fechaCompra: document.querySelector('#editar-fechaCompra').value,
-          total: document.querySelector('#editar-total').value,
-          subTotal: document.querySelector('#editar-subTotal').value,
-          descuento: document.querySelector('#editar-descuento').value,
-          estado: document.querySelector('#editar-estado').value,
-        })
-      })
-  
-      const res = await req.json();
-  
-      if(res.error) {
-        // Handlear error
-        alert("RIP");
-        console.error(`Error al obtener los datos de la compra con ID ${idCompra}`, res.error);
-        return;
-      }
-  
-      // Update table
-      const tr = document.querySelector(`#compra-${idCompra}`);
-      tr.innerHTML = `
-        <td>${res.Id_Compra}</td>
-        <td>${res.Id_Proveedor}</td>
-        <td>${res.Fecha_Compra}</td>
-        <td>${res.Total}</td>
-        <td>${res.Sub_Total}</td>
-        <td>${res.Descuento}</td>
-        <td>${res.Estado}</td>
-        <td>
-          <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#editarModal" onclick="setDatasetIdCompra(${res.Id_Compra})">Editar</button>
-          <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#eliminarModal" onclick="setDatasetIdCompra(${res.Id_Compra}, false)">Eliminar</button>
-        </td>
-      `;
-  
-      closeModal();
-    }
-  
-    function closeModal() {
-       // Cerrar modal
+  // Actualizar tabla
+  const tr = document.querySelector(`#categoria-${idCategoria}`);
+  tr.innerHTML = `
+    <td>${res.id}</td>
+    <td>${res.nombre}</td>
+    <td>${res.estado}</td>
+    <td>
+      <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#editarModal" onclick="setDatasetIdCat(${res.id})">Editar</button>
+      <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#eliminarModal" onclick="setDatasetIdCat(${res.id}, false)">Eliminar</button>
+    </td>
+  `;
+
+  closeModal();
+}
+
+function closeModal() {
+  // Cerrar modal
+  const editarModal = document.getElementById('editarModal');
+  const bootstrapModal = bootstrap.Modal.getInstance(editarModal);
+  bootstrapModal.hide();
+}
+
+// Guardar información del formulario
+document.getElementById('editar-categoria-form').addEventListener('submit', function(event) {
+  event.preventDefault();
+
+  const idCategoria = document.getElementById('editar-id').value;
+  const nombre = document.getElementById('editar-nombre').value;
+  const estado = document.getElementById('editar-estado').value;
+
+  const categoriaActualizada = {
+    idCategoria,
+    nombre,
+    estado
+  };
+
+  fetch(`/categorias/${idCategoria}`, {
+    method: 'PUT',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(categoriaActualizada)
+  })
+    .then(response => response.json())
+    .then(response => {
+      console.log('Categoría actualizada exitosamente', response);
+
+      // Cerrar modal
       const editarModal = document.getElementById('editarModal');
       const bootstrapModal = bootstrap.Modal.getInstance(editarModal);
       bootstrapModal.hide();
-    }
-  
-    // guardar info del form
-    document.getElementById('editar-compra-form').addEventListener('submit', function(event) {
-      event.preventDefault(); 
-    
-      const idCompra = document.getElementById('editar-idCompra').value;
-      const idProveedor = document.getElementById('editar-idProveedor').value;
-      const fechaCompra = document.getElementById('editar-fechaCompra').value;
-      const total = document.getElementById('editar-total').value;
-      const subTotal = document.getElementById('editar-subTotal').value;
-      const descuento = document.getElementById('editar-descuento').value;
-      const estado = document.getElementById('editar-estado').value;
-  
-      const compraActualizada = {
-        Id_Compra: idCompra,
-        Id_Proveedor: idProveedor,
-        Fecha_Compra: fechaCompra,
-        Total: total,
-        Sub_Total: subTotal,
-        Descuento: descuento,
-        Estado: estado
-      };
-  
-      fetch(`/compras/${idCompra}`, {
-        method: 'PUT',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(compraActualizada)
-      })
-        .then(response => response.json())
-        .then(response => {
-          console.log('Compra actualizada exitosamente', response);
-  
-          // Cerrar modal
-          const editarModal = document.getElementById('editarModal');
-          const bootstrapModal = bootstrap.Modal.getInstance(editarModal);
-          bootstrapModal.hide();
-  
-          obtenerCompras();
-        })
-        .catch(error => {
-          console.error(`Error al actualizar la compra con ID ${idCompra}`, error);
-        });
+
+      obtenerCategorias();
+    })
+    .catch(error => {
+      console.error(`Error al actualizar la categoría con ID ${idCategoria}`, error);
     });
-  
-    function eliminarCompra() {
-      const id = document.querySelector('#eliminarModal').dataset.id;
-  
-      const eliminarConfirmarButton = document.getElementById('eliminar-confirmar');
-      eliminarConfirmarButton.addEventListener('click', function() {
-        fetch(`/compras/${id}`, {
-          method: 'DELETE'
-        })
-          .then(response => response.json())
-          .then(response => {
-            console.log('Compra eliminada exitosamente', response);
-  
-            // Cerrar modal
-            const eliminarModal = document.getElementById('eliminarModal');
-            const bootstrapModal = bootstrap.Modal.getInstance(eliminarModal);
-            bootstrapModal.hide();
-  
-            obtenerCompras();
-          })
-          .catch(error => {
-            console.error(`Error al eliminar la compra con ID ${id}`, error);
-          });
+});
+
+//eliminar
+
+function eliminarCategoria() {
+  const id = document.querySelector('#eliminarModal').dataset.id;
+
+  const eliminarConfirmarButton = document.getElementById('eliminar-confirmar');
+  eliminarConfirmarButton.addEventListener('click', function() {
+    fetch(`/categorias/${id}`, {
+      method: 'DELETE'
+    })
+      .then(response => response.json())
+      .then(response => {
+        console.log('Categoría eliminada exitosamente', response);
+
+        // Cerrar modal
+        const eliminarModal = document.getElementById('eliminarModal');
+        const bootstrapModal = bootstrap.Modal.getInstance(eliminarModal);
+        bootstrapModal.hide();
+
+        obtenerCategorias();
+      })
+      .catch(error => {
+        console.error(`Error al eliminar la categoría con ID ${id}`, error);
       });
-    }
-  </script>
+  });
+}
+
+</script>
 
 
 
@@ -596,7 +545,9 @@
 
 
 
-  
+
+
+
   <!-- ======= Footer ======= -->
   <footer id="footer" class="footer">
     <div class="text-center">
@@ -606,7 +557,6 @@
 </footer>
 <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
 <!-- ======= End Footer ======= -->
-
 
   <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
 
