@@ -29,13 +29,11 @@ app.use(express.json());
 app.use(express.static(path.join(__dirname, 'public')));
 
 const proveedoresRoutes = require('./routes/proveedoresRoutes');
-const comprasRoutes = require('./routes/comprasRoutes');
 const productosRoutes = require('./routes/productosRoutes');
 const categoriasRoutes = require('./routes/categoriasRoutes');
 const stockRoutes = require('./routes/stockRoutes');
 
 app.use('/proveedores', proveedoresRoutes);
-app.use('/compras', comprasRoutes);
 app.use('/productos', productosRoutes);
 app.use('/categorias', categoriasRoutes);
 app.use('/stock', stockRoutes);

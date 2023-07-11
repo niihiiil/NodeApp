@@ -48,7 +48,7 @@
     <div class="d-flex align-items-center justify-content-between">
       <a href="index.html" class="logo d-flex align-items-center">
         <img src="assets/img/logo.png" alt="">
-        <span class="d-none d-lg-block">LayoutVistas</span>
+        <span class="d-none d-lg-block">CRUD</span>
       </a>
       <i class="bi bi-list toggle-sidebar-btn"></i>
     </div><!-- End Logo -->
@@ -337,7 +337,7 @@
 
 <script>
  //Obtener la referencia del tbody de la tabla
- const categoriasTableBody = document.querySelector("#categorias-table-body");
+ const categoriasTableBody = document.getElementById("categorias-table-body");
 
 function setDatasetIdCat(id, editar = true) {
     if (editar) {

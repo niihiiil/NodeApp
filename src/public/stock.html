@@ -223,26 +223,89 @@
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+  <main id="main" class="main">
+    <div class="pagetitle">
+      <h1>Stock de Artículos</h1>
+      <nav>
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item"><a href="index.html">Home</a></li>
+          <li class="breadcrumb-item">CRUD</li>
+          <li class="breadcrumb-item active">Stock de Artículos</li>
+        </ol>
+      </nav>
+    </div><!-- End Page Title -->
+  
+    <!-- Table with stripped rows -->
+    <table class="table datatable">
+      <thead>
+        <tr>
+          <th scope="col">ID Artículo</th>
+          <th scope="col">ID Producto</th>
+          <th scope="col">ID Bodega</th>
+          <th scope="col">ID Compra</th>
+          <th scope="col">Cantidad</th>
+          <th scope="col">Estado</th>
+          <th scope="col">Valor Unitario</th>
+          <th scope="col">Precio de Compra</th>
+          <th scope="col">Precio de Venta</th>
+          <th scope="col">Descripción</th>
+          <th scope="col">Fecha de Ingreso</th>
+          <th scope="col">Condición del Producto</th>
+          <th scope="col">Color</th>
+          <th scope="col">ID Marca</th>
+          <th scope="col">Dimensiones</th>
+        </tr>
+      </thead>
+      <tbody id="stock-articulos-table-body">
+        <!-- Aquí se generarán dinámicamente las filas de la tabla -->
+      </tbody>
+    </table>
+    <!-- End Table with stripped rows -->
+  
+   
+  </main>
   
 
 <script>
- 
+  const productosTableBody = document.getElementById("stock-articulos-table-body");
+  
+ function obtenerArticulosStock() {
+  fetch('/stock')
+    .then(response => response.json())
+    .then(articulos => {
+      stockArticulosTableBody.innerHTML = '';
+
+      articulos.forEach(articulo => {
+        const row = document.createElement('tr');
+        row.id = `articulo-${articulo.Id_Articulo}`;
+        row.dataset.id = articulo.Id_Articulo;
+        row.innerHTML = `
+          <td>${articulo.Id_Articulo}</td>
+          <td>${articulo.Id_Producto}</td>
+          <td>${articulo.Id_Bodega}</td>
+          <td>${articulo.Id_Compra}</td>
+          <td>${articulo.Cantidad}</td>
+          <td>${articulo.Estado}</td>
+          <td>${articulo.Valor_Unitario}</td>
+          <td>${articulo.Precio_Compra}</td>
+          <td>${articulo.Precio_Venta}</td>
+          <td>${articulo.Descripcion}</td>
+          <td>${articulo.Fecha_Ingreso}</td>
+          <td>${articulo.Condicion_Prod}</td>
+          <td>${articulo.Color}</td>
+          <td>${articulo.IdMarca}</td>
+          <td>${articulo.Dimensiones}</td>
+        `;
+        stockArticulosTableBody.appendChild(row);
+      });
+    })
+    .catch(error => {
+      console.error('Error al obtener los artículos del stock', error);
+    });
+}
+
+obtenerArticulosStock();
+
 </script>
 
 

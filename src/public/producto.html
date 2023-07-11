@@ -221,32 +221,325 @@
   </aside><!-- End Sidebar-->
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+  <main id="main" class="main">
+    <div class="pagetitle">
+      <h1>Productos</h1>
+      <nav>
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item"><a href="index.html">Home</a></li>
+          <li class="breadcrumb-item">CRUD</li>
+          <li class="breadcrumb-item active">Productos</li>
+        </ol>
+      </nav>
+    </div><!-- End Page Title -->
+  
+    <!-- Table with stripped rows -->
+    <table class="table datatable">
+      <thead>
+        <tr>
+          <th scope="col">ID Producto</th>
+          <th scope="col">Descripción</th>
+          <th scope="col">Estado</th>
+          <th scope="col">Nombre</th>
+          <th scope="col">ID Categoría</th>
+          <th scope="col">Acciones</th>
+        </tr>
+      </thead>
+      <tbody id="producto-table-body">
+        <!-- Aquí se generarán dinámicamente las filas de la tabla -->
+      </tbody>
+    </table>
+    <!-- End Table with stripped rows -->
+  
+    <div class="row">
+      <div class="col-lg-6">
+        <div class="card">
+          <div class="card-body">
+            <h5 class="card-title">Agregar Producto</h5>
+            <form id="productoForm">
+              <div class="mb-3">
+                <label for="nombre">Nombre:</label>
+                <input type="text" class="form-control" id="nombre" name="nombre" required>
+              </div>
+              <div class="mb-3">
+                <label for="descripcion">Descripción:</label>
+                <input type="text" class="form-control" id="descripcion" name="descripcion">
+              </div>
+              <div class="mb-3">
+                <label for="estado">Estado:</label>
+                <input type="text" class="form-control" id="estado" name="estado" required>
+              </div>
+              <div class="mb-3">
+                <label for="idCategoria">ID Categoría:</label>
+                <input type="text" class="form-control" id="idCategoria" name="idCategoria" required>
+              </div>
+              <button type="submit" class="btn btn-primary" id="guardarButton">Guardar</button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  
+  </section>
+  
+  <!-- Modal para editar producto -->
+  <div class="modal fade" id="editarModal" tabindex="-1" aria-labelledby="editarModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="editarModalLabel">Editar Producto</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <!-- Formulario para editar el producto -->
+          <form id="editar-producto-form">
+            <input type="hidden" id="editar-id" name="editar-id">
+            <div class="mb-3">
+              <label for="editar-nombre">Nombre:</label>
+              <input type="text" class="form-control" id="editar-nombre" name="editar-nombre" required>
+            </div>
+            <div class="mb-3">
+              <label for="editar-descripcion">Descripción:</label>
+              <input type="text" class="form-control" id="editar-descripcion" name="editar-descripcion">
+            </div>
+            <div class="mb-3">
+              <label for="editar-estado">Estado:</label>
+              <input type="text" class="form-control" id="editar-estado" name="editar-estado" required>
+            </div>
+            <div class="mb-3">
+              <label for="editar-idCategoria">ID Categoría:</label>
+              <input type="text" class="form-control" id="editar-idCategoria" name="editar-idCategoria" required>
+            </div>
+            <button type="button" class="btn btn-primary" onclick="editarProducto()">Guardar cambios</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <!-- Modal para eliminar producto -->
+  <div class="modal fade" id="eliminarModal" tabindex="-1" aria-labelledby="eliminarModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="eliminarModalLabel">Eliminar Producto</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <p>¿Estás seguro de que deseas eliminar este producto?</p>
+          <button type="button" class="btn btn-danger" id="eliminar-confirmar" onclick="eliminarProducto()">Eliminar</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js" integrity="sha512-9RBuRTFRJSXvsDxIYs3JyYyyGJ6AD2mV9H0FJdLmVtHlnJW/Lr/AtJt9PdyV0Vaj79LW6IeA5a/WI9Zbs8F2Zw==" crossorigin="anonymous"></script>
   
 
-<script>
- 
-</script>
+  <script>
+    // Obtener la referencia del tbody de la tabla
+    const productosTableBody = document.getElementById("producto-table-body");
+  
+    function setDatasetIdProd(id, editar = true) {
+      if (editar) {
+        document.getElementById('editar-producto-form').dataset.id = id;
+      } else {
+        document.getElementById('eliminarModal').dataset.id = id;
+      }
+    }
+  
+    function obtenerProductos() {
+      fetch('/productos')
+        .then(response => response.json())
+        .then(productos => {
+          productosTableBody.innerHTML = '';
+  
+          productos.forEach(producto => {
+            const row = document.createElement('tr');
+            row.id = `producto-${producto.Id_Producto}`;
+            row.dataset.id = producto.Id_Producto;
+            row.innerHTML = `
+              <td>${producto.Id_Producto}</td>
+              <td>${producto.Descripcion}</td>
+              <td>${producto.Estado}</td>
+              <td>${producto.Nombre}</td>
+              <td>${producto.Id_Categoria}</td>
+              <td>
+                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#editarModal" onclick="setDatasetIdProd(${producto.Id_Producto})">Editar</button>
+                <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#eliminarModal" onclick="setDatasetIdProd(${producto.Id_Producto}, false)">Eliminar</button>
+              </td>
+            `;
+            productosTableBody.appendChild(row);
+          });
+        })
+        .catch(error => {
+          console.error('Error al obtener los productos', error);
+        });
+    }
+  
+    obtenerProductos();
 
+    //guardado
 
+    document.getElementById('productoForm').addEventListener('submit', function(event) {
+  event.preventDefault();
 
+  const nombre = document.getElementById('nombre').value;
+  const estado = document.getElementById('estado').value;
+  const descripcion = document.getElementById('descripcion').value;
+  const idCategoria = document.getElementById('idCategoria').value;
+
+  // Crear un objeto con los datos del producto
+  const producto = {
+    nombre,
+    estado,
+    descripcion,
+    idCategoria
+  };
+
+  fetch('/productos', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(producto)
+  })
+    .then(response => response.json())
+    .then(response => {
+      console.log('Producto guardado exitosamente', response);
+
+      document.getElementById('nombre').value = '';
+      document.getElementById('estado').value = '';
+      document.getElementById('descripcion').value = '';
+      document.getElementById('idCategoria').value = '';
+
+      obtenerProductos();
+    })
+    .catch(error => {
+      console.error('Error al guardar el producto', error);
+    });
+});
+
+//editado
+
+async function editarProducto() {
+  const idProducto = document.querySelector('#editar-producto-form').dataset.id;
+
+  const req = await fetch(`/productos/${idProducto}`, {
+    method: "PUT",
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({
+      nombre: document.querySelector('#editar-nombre').value,
+      estado: document.querySelector('#editar-estado').value,
+      descripcion: document.querySelector('#editar-descripcion').value,
+      idCategoria: document.querySelector('#editar-idCategoria').value,
+    })
+  });
+
+  const res = await req.json();
+
+  if (res.error) {
+    // Manejar error
+    alert("Ocurrió un error al editar el producto");
+    console.error(`Error al obtener los datos del producto con ID ${idProducto}`, res.error);
+    return;
+  }
+
+  // Actualizar tabla
+  const tr = document.querySelector(`#producto-${idProducto}`);
+  tr.innerHTML = `
+    <td>${res.id}</td>
+    <td>${res.nombre}</td>
+    <td>${res.estado}</td>
+    <td>${res.descripcion}</td>
+    <td>${res.idCategoria}</td>
+    <td>
+      <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#editarModal" onclick="setDatasetIdProd(${res.id})">Editar</button>
+      <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#eliminarModal" onclick="setDatasetIdProd(${res.id}, false)">Eliminar</button>
+    </td>
+  `;
+
+  closeModal();
+}
+
+function closeModal() {
+  // Cerrar modal
+  const editarModal = document.getElementById('editarModal');
+  const bootstrapModal = bootstrap.Modal.getInstance(editarModal);
+  bootstrapModal.hide();
+}
+
+// Guardar información del formulario
+document.getElementById('editar-producto-form').addEventListener('submit', function(event) {
+  event.preventDefault();
+
+  const idProducto = document.getElementById('editar-id').value;
+  const nombre = document.getElementById('editar-nombre').value;
+  const estado = document.getElementById('editar-estado').value;
+  const descripcion = document.getElementById('editar-descripcion').value;
+  const idCategoria = document.getElementById('editar-idCategoria').value;
+
+  const productoActualizado = {
+    idProducto,
+    nombre,
+    estado,
+    descripcion,
+    idCategoria
+  };
+
+  fetch(`/productos/${idProducto}`, {
+    method: 'PUT',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(productoActualizado)
+  })
+    .then(response => response.json())
+    .then(response => {
+      console.log('Producto actualizado exitosamente', response);
+
+      // Cerrar modal
+      const editarModal = document.getElementById('editarModal');
+      const bootstrapModal = bootstrap.Modal.getInstance(editarModal);
+      bootstrapModal.hide();
+
+      obtenerProductos();
+    })
+    .catch(error => {
+      console.error(`Error al actualizar el producto con ID ${idProducto}`, error);
+    });
+});
+
+//eliminar
+
+function eliminarProducto() {
+  const id = document.querySelector('#eliminarModal').dataset.id;
+
+  const eliminarConfirmarButton = document.getElementById('eliminar-confirmar');
+  eliminarConfirmarButton.addEventListener('click', function() {
+    fetch(`/productos/${id}`, {
+      method: 'DELETE'
+    })
+      .then(response => response.json())
+      .then(response => {
+        console.log('Producto eliminado exitosamente', response);
+
+        // Cerrar modal
+        const eliminarModal = document.getElementById('eliminarModal');
+        const bootstrapModal = bootstrap.Modal.getInstance(eliminarModal);
+        bootstrapModal.hide();
+
+        obtenerProductos();
+      })
+      .catch(error => {
+        console.error(`Error al eliminar el producto con ID ${id}`, error);
+      });
+  });
+}
+
+  </script>
+  
 
 
 
